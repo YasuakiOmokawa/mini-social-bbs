@@ -2,47 +2,48 @@
 <title>Vue.Component</title>
 <script src="https://unpkg.com/vue@2.5.17"></script>
 
-<div id="fruits-counter">
-    <div v-for="fruit in fruits">
-        {{fruit.name}}:
-        <counter-button v-on:increment="incrementCartStatus()"></counter-button>
-    </div>
-    <p>合計: {{total}}</p>
+<div id="login-example">
+    <user-login></user-login>
 </div>
 
+<!-- テンプレート -->
+<script type="text/x-template" id="login-template">
+    <div id="login-template">
+        <div>
+            <input type="text" placeholder="ログインID" v-model="userid">
+        </div>
+        <div>
+            <input type="password" placeholder="パスワード" v-model="password">
+        </div>
+        <button @click="login()">ログイン</button>
+    </div>
+
+</script>
+
 <script>
-    var counterButton = Vue.extend({
-        template: '<span>{{counter}}個<button v-on:click="addToCart">追加</button></span>',
+    // コンポーネント定義
+    Vue.component('user-login', {
+        template: '#login-template',
         data: function() {
             return {
-                counter: 0
-            };
+                userid: '',
+                password: ''
+            }
         },
         methods: {
-            addToCart: function() {
-                this.counter += 1;
-                this.$emit("increment"); // incrementカスタムイベントの発火
+            login: function() {
+                auth.login(this.userid, this.password)
             }
         }
-    });
+    })
+
+    var auth = {
+        login: function(id, pass) {
+            window.alert("userid:" + id + "\n" + "password:" + pass)
+        }
+    }
 
     new Vue({
-        el: "#fruits-counter",
-        components: {
-            "counter-button": counterButton
-        },
-        data: {
-            total: 0,
-            fruits: [{
-                name: "梨"
-            }, {
-                name: "りんご"
-            }]
-        },
-        methods: {
-            incrementCartStatus: function() {
-                this.total += 1;
-            }
-        }
-    });
+        el: '#login-example'
+    })
 </script>
