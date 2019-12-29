@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<title>Vue.Stationary store</title>
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <ul>
+        <li v-for="item in items" v-bind:key="item.name">
+            {{item.name}}の個数: <input type="number" v-model="item.quantity" min="0">
+        </li>
+    </ul>
+    <hr>
+    <!-- 1000円になるまで、赤く表示する -->
+    <div v-bind:style="errorMessageStyle">
+        <ul>
+            <!-- 各商品の単価と購入個数をリスト表示 -->
+            <li v-for="item in items" v-bind:key="item.name">
+                {{item.name}}: {{item.price}} x {{item.quantity}} = {{item.price * item.quantity | numberWithDelimiter}}円
+            </li>
+        </ul>
+        <p>小計: {{totalPrice | numberWithDelimiter}}円</p>
+        <p>合計(税込): {{totalPriceWithTax | numberWithDelimiter}}円</p>
+        <!-- 属性値に応じて、表示を出し分けする -->
+        <p v-show="!canBuy">
+            {{ 1000 | numberWithDelimiter}}円以上からご購入いただけます
+        </p>
+        <!-- ボタンが押されたら購入メソッドを呼び出す -->
+        <button v-bind:disabled="!canBuy" v-on:click="doBuy">購入</button>
+    </div>
+</div>
+
+<!-- ここの位置に書かないと上記の要素がマウントされない -->
+<script src="app.js"></script>
