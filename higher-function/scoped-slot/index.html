@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<title>スコープ付きスロット</title>
+<script src="https://unpkg.com/vue@2.5.17"></script>
+
+<div id="app">
+    <todo-list :todos="todos">
+        <li slot-scope="{todo}" v-if="todo.isCompleted">
+            {{todo.text}}
+        </li>
+    </todo-list>
+</div>
+<script src="./app.js"></script>
