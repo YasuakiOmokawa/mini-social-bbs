@@ -36,6 +36,12 @@ var IconShareButton = {
 };
 
 var TextShareButton = {
+    methods: {
+        share: function() {
+            // メソッド名が衝突したときはここが呼ばれる
+            window.alert("コンポーネントからシェアされました");
+        }
+    },
     mixins: [Sharable],
     created: function() {
         console.log("TextShareButtonのフックが呼ばれました");
